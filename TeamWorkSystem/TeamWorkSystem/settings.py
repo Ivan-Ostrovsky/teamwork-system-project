@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     #app
     'staff.apps.StaffConfig',
+    'news.apps.NewsConfig'
 ]
 
 MIDDLEWARE = [
@@ -117,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

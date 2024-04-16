@@ -7,6 +7,7 @@ class User(AbstractUser):
     user_pic = models.ImageField(default = "default.jpg", upload_to="media/", blank=True, null=True)
     info = models.TextField(blank=True, null=True)
     department = models.ForeignKey('UserDepartament', related_name='worker', on_delete=models.PROTECT, null=True, blank=True)
+    # related_name записи первичной модели, предназначенного для доступа к связанным записям вторичной модели
 
     def __str__(self):
         return self.username
