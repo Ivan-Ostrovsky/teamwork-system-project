@@ -6,3 +6,4 @@ djangorestframework==3.15.1
 psycopg2==2.9.9
 sqlparse==0.4.4
 tzdata==2024.1
+drf-nested-routers==0.93.5

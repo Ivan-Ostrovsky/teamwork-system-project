@@ -3,6 +3,7 @@ from .models import CorporationNews, NewsComments
 
 class NewsSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source = 'author.username')
+    publish = serializers.ReadOnlyField()
     # далее заменить на ссылку или ID - удалять нельза сериализация при POST запросе
 
     class Meta: 
@@ -11,6 +12,7 @@ class NewsSerializer(serializers.ModelSerializer):
 
 class CommmentSerializer(serializers.ModelSerializer):
     writer = serializers.ReadOnlyField(source = 'writer.id')
+    date = serializers.ReadOnlyField()
     # далее заменить на ссылку или ID - удалять нельзя сериализация при POST запросе
 
     class Meta:

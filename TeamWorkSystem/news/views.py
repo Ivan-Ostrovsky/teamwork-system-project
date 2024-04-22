@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework import viewsets 
 from rest_framework.pagination import PageNumberPagination
 from .models import CorporationNews, NewsComments
 from .serializer import NewsSerializer, CommmentSerializer
@@ -10,55 +11,34 @@ class NewsListPagination(PageNumberPagination):
     max_page_size = 50
 # пагинатор класс    
 
-class NewsListAPIView(generics.ListCreateAPIView):
+class NewsViewSet(viewsets.ModelViewSet):
     queryset = CorporationNews.objects.all()
     serializer_class = NewsSerializer
     #  permission_classes послде настроек разрешения
-    pagination_class = NewsListPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-# Список новостей компании
 
-class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CorporationNews.objects.all()
-    serializer_class = NewsSerializer
-    #  permission_classes послде настроек разрешения
-# страница новости с возможность редактирования и удаления
-
-class CommmentsListAPIView(generics.ListCreateAPIView):
-    serializer_class = CommmentSerializer
-
-    def get_queryset(self):
-        return NewsComments.objects.filter(news=self.kwargs['news_id'])
+    # ? добавить фунукцию на редактирование - не надо (сохраннеия автора) 
+    # (при внесение правок тоже работает) - посмотреть документацию
     
-    # def get_queryset(self):
-    #     return CorporationNews.objects.get(pk=self.kwargs['news_id']).Comments.all()
-    # альтернативный вариант - обращение черз модель "Новости"
+# новости
 
-    def perform_create(self, serializer):
-        serializer.save(
-            writer=self.request.user,
-            news_id=self.kwargs['news_id']
-            )
-    # сохраням коменттора и ID новости
-# Лист коментарии к конкретной новости по ID
-
-class CommmentsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = NewsComments.objects.all()
+class CommentsViewSet(viewsets.ModelViewSet):
     serializer_class = CommmentSerializer
-    #  permission_classes послде настроек разрешения
+    #  permission_classes послде настроек разрешения 
+    # только автор может редактировать коментарий
 
     def get_queryset(self):
-        return NewsComments.objects.filter(news=self.kwargs['news_id'])
+        return NewsComments.objects.filter(news=self.kwargs['news_pk'])
     
     def perform_create(self, serializer):
         serializer.save(
             writer=self.request.user,
-            news_id=self.kwargs['news_id']
+            news_id=self.kwargs['news_pk']
             )
-    # сохраням коменттора и ID новости
-# страница коментария с возможность редактирования и удаления       
+    # сохраням коменттора и ID новости (при внесение правок тоже работает)
+# коментарии к новостям   
 
 
 # Create your views here.

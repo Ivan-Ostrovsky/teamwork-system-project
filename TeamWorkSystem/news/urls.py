@@ -1,9 +1,17 @@
-from django.urls import path
-from .views import NewsListAPIView, NewsDetailAPIView, CommmentsListAPIView, CommmentsDetailAPIView
+from django.urls import path, include
+from rest_framework.routers import SimpleRouter
+from rest_framework_nested import routers 
+from .views import NewsViewSet, CommentsViewSet
+
+
+router = SimpleRouter()
+router.register(r'news', NewsViewSet, basename='News')
+
+news_router = routers.NestedSimpleRouter(router, r'news', lookup='news')
+news_router.register(r'comments', CommentsViewSet, basename="Comments-News")
+
 
 urlpatterns = [
-    path('api/news/', NewsListAPIView.as_view()),
-    path('api/news/<int:pk>/', NewsDetailAPIView.as_view()),
-    path('api/news/<news_id>/comments/', CommmentsListAPIView.as_view()),
-    path('api/news/<news_id>/comments/<int:pk>/', CommmentsDetailAPIView.as_view()),
+    path(r'api/', include(router.urls)),
+    path(r'api/', include(news_router.urls)),
 ]
