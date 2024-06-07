@@ -16,7 +16,7 @@ class User(AbstractUser):
 class UserDepartament(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Назване отдела")
     head = models.ForeignKey(User, on_delete=models.PROTECT)
-    super_department = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True)
+    super_department = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True) # обращение модели к себе сомой
 
     class Meta:
         verbose_name = 'Departament'

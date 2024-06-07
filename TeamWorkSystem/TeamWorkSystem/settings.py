@@ -49,6 +49,12 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig'
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated' # доступ имеют только аутентифицированные, зарегистрированные пользователи
+    ]
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

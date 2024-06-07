@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from rest_framework import generics
 from rest_framework import viewsets 
 from rest_framework.pagination import PageNumberPagination
 from .models import CorporationNews, NewsComments
 from .serializer import NewsSerializer, CommmentSerializer
+from .permission import IsAuthorOrReadOnly
+from rest_framework.permissions import  IsAuthenticated
 
 class NewsListPagination(PageNumberPagination):
     page_size = 10
@@ -14,7 +14,8 @@ class NewsListPagination(PageNumberPagination):
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = CorporationNews.objects.all()
     serializer_class = NewsSerializer
-    #  permission_classes послде настроек разрешения
+    permission_classes = [IsAuthenticated  &  IsAuthorOrReadOnly] # он поддерживает & (и), | (или) и ~ (не).
+    # только автор может редактировать новость
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -26,7 +27,7 @@ class NewsViewSet(viewsets.ModelViewSet):
 
 class CommentsViewSet(viewsets.ModelViewSet):
     serializer_class = CommmentSerializer
-    #  permission_classes послде настроек разрешения 
+    permission_classes = [IsAuthenticated  & IsAuthorOrReadOnly]
     # только автор может редактировать коментарий
 
     def get_queryset(self):
