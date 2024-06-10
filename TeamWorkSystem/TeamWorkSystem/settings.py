@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     #app
     'staff.apps.StaffConfig',
     'news.apps.NewsConfig'
@@ -52,7 +54,13 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated' # доступ имеют только аутентифицированные, зарегистрированные пользователи
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        # нужна нам для нашего Browsable API - просмотра в браузере (во время разработке)
+        'rest_framework.authentication.TokenAuthentication',
+        # добавили Token авторизацию
+    ],
 }
 
 MIDDLEWARE = [

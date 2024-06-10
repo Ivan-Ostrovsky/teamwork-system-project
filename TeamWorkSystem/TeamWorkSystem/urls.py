@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('staff.urls')),
     path('', include('news.urls')),
-    path('api-auth', include('rest_framework.urls')) # вход в систему в просматриваемый API
-
+    path('api-auth', include('rest_framework.urls')), # вход в систему в просматриваемый API - Browsable API
+    path('dj-rest-auth/', include('dj_rest_auth.urls')), # конечные точки API для входа, выхода и сброса пароля
 ]
