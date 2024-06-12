@@ -12,6 +12,6 @@ news_router.register(r'comments', CommentsViewSet, basename="Comments-News")
 
 
 urlpatterns = [
-    path(r'api/', include(router.urls)),
-    path(r'api/', include(news_router.urls)),
+    path(r'', include(router.urls)),
+    path(r'', include(news_router.urls)),
 ]

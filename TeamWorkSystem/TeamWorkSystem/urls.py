@@ -16,11 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from knox import views as knox_views
+from staff.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('staff.urls')),
-    path('', include('news.urls')),
     path('api-auth', include('rest_framework.urls')), # вход в систему в просматриваемый API - Browsable API
-    path('dj-rest-auth/', include('dj_rest_auth.urls')), # конечные точки API для входа, выхода и сброса пароля
+    path('api/v1/', include('staff.urls')),
+    path('api/v1/', include('news.urls')),
+
+    path(r'api/v1/login/', LoginView.as_view(), name='knox_login'), # конечная точка входа
+    path(r'api/v1/logout/', knox_views.LogoutView.as_view(), name='knox_logout'), # конечная точка выхода
+    path(r'api/v1/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'), # конечная точка токина
 ]

@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from .models import CorporationNews, NewsComments
 from .serializer import NewsSerializer, CommmentSerializer
-from .permission import IsAuthorOrReadOnly
+from .permission import IsAuthorOrReadOnly, IsWriterOrReadOnly
 from rest_framework.permissions import  IsAuthenticated
 
 class NewsListPagination(PageNumberPagination):
@@ -27,8 +27,8 @@ class NewsViewSet(viewsets.ModelViewSet):
 
 class CommentsViewSet(viewsets.ModelViewSet):
     serializer_class = CommmentSerializer
-    permission_classes = [IsAuthenticated  & IsAuthorOrReadOnly]
-    # только автор может редактировать коментарий
+    permission_classes = [IsAuthenticated  & IsWriterOrReadOnly]
+    # только (автор комента) коментатор может редактировать коментарий
 
     def get_queryset(self):
         return NewsComments.objects.filter(news=self.kwargs['news_pk'])

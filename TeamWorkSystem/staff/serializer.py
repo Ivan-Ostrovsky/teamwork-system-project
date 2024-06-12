@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from .models import User, UserDepartament
 
-class UserSerializer(serializers.ModelSerializer):
+class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'position', 'user_pic' ]
 
-class UserDetailSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
@@ -21,6 +21,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'user_pic',
             'info'
             ]
+        read_only_fields = ['username'] # поле теолько для чтения
 
 
 class DepartamentSerializer (serializers.ModelSerializer):

@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party
     'rest_framework',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+    'knox',
     #app
     'staff.apps.StaffConfig',
     'news.apps.NewsConfig'
@@ -58,8 +57,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         # нужна нам для нашего Browsable API - просмотра в браузере (во время разработке)
-        'rest_framework.authentication.TokenAuthentication',
-        # добавили Token авторизацию
+        'knox.auth.TokenAuthentication',
+        # добавили Token авторизацию knox
     ],
 }
 
