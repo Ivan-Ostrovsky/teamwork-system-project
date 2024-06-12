@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'knox',
+    'drf_spectacular',
     #app
     'staff.apps.StaffConfig',
     'news.apps.NewsConfig'
@@ -60,6 +61,9 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
         # добавили Token авторизацию knox
     ],
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # схема и документирование
 }
 
 MIDDLEWARE = [
@@ -149,3 +153,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'staff.User'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'TeamWorkSystem API',
+    'DESCRIPTION': 'TeamWorkSystem is a pilot project for a personnel management system - designed to manage distributed team projects by means of tasks.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

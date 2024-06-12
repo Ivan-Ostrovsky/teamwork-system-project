@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from knox import views as knox_views
 from staff.views import LoginView
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,10 @@ urlpatterns = [
     path(r'api/v1/login/', LoginView.as_view(), name='knox_login'), # конечная точка входа
     path(r'api/v1/logout/', knox_views.LogoutView.as_view(), name='knox_logout'), # конечная точка выхода
     path(r'api/v1/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'), # конечная точка токина
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Swagger UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # Redoc UI:
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
